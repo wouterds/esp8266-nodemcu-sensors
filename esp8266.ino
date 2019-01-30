@@ -30,7 +30,14 @@ void loop()
 void handleRoot()
 {
   Serial.println("[WebServer] Request: /");
-  webServer.send(200, "text/plain", "Hello World!");
+
+  // Build response
+  String response = "";
+  response += "{";
+  response += "}";
+
+  // Send response
+  webServer.send(200, "application/json", response);
 }
 
 void setupWiFi()
