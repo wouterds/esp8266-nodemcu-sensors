@@ -1,0 +1,3 @@
+[submodule "libs/adafruit-tsl2561"]
+	path = libs/adafruit-tsl2561
+	url = https://github.com/adafruit/TSL2561-Arduino-Library.git
