@@ -1,3 +1,4 @@
+#include <Wire.h>
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
 
@@ -10,6 +11,9 @@ ESP8266WebServer webServer(80);
 
 void setup()
 {
+  // Setup I2C
+  Wire.begin(D1, D2);
+
   // Setup Serial
   Serial.begin(9600);
   Serial.println();
