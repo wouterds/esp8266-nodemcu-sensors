@@ -1,3 +1,6 @@
 [submodule "libs/adafruit-tsl2561"]
 	path = libs/adafruit-tsl2561
 	url = https://github.com/adafruit/TSL2561-Arduino-Library.git
+[submodule "libs/adafruit-bme280"]
+	path = libs/adafruit-bme280
+	url = https://github.com/adafruit/Adafruit_BME280_Library.git
