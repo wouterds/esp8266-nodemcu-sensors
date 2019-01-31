@@ -16,7 +16,7 @@ TSL2561 tsl2561(TSL2561_ADDR_FLOAT);
 void setup()
 {
   // Setup I2C
-  Wire.begin(D1, D2);
+  Wire.begin(D2, D1);
 
   // Setup Serial
   Serial.begin(9600);
