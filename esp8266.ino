@@ -72,7 +72,7 @@ void handleRoot()
   webServer.send(200, "application/json", response);
 }
 
-void readTemperature() {
+float readTemperature() {
   float bme280Temperature = bme280.readTemperature();
   float tmp102Temperature = tmp102.readTempC();
 
