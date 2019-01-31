@@ -2,7 +2,7 @@
 
 Basic example how to output sensor readings as a JSON API using an ESP8266 NodeMCU module and some sensors. Everything on the picture below was bought from ebay for no more than $10.
 
-![IMG](https://i.imgur.com/TfiYs0u.jpg)
+![Breadboard setup](https://i.imgur.com/wLqQVrZ.jpg)
 
 ## Sensors
 
