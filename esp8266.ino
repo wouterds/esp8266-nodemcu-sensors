@@ -45,14 +45,14 @@ void handleRoot()
   float full = tsl2561.getLuminosity(TSL2561_FULLSPECTRUM);
   float ir = tsl2561.getLuminosity(TSL2561_INFRARED);
 
+  // Read temperature
+  float temperature = readTemperature();
+
   // Read humidity
   float humidity = bme280.readHumidity();
 
   // Read pressure
   float pressure = bme280.readPressure();
-
-  // Read temperature
-  float temperature = readTemperature();
 
   // Build response
   String response = "";
@@ -65,10 +65,10 @@ void handleRoot()
   response += ",\"ir\":";
   response += ir;
   response += "}";
-  response += ",\"humidity\":";
-  response += humidity;
   response += ",\"temperature\":";
   response += temperature;
+  response += ",\"humidity\":";
+  response += humidity;
   response += ",\"pressure\":";
   response += pressure;
   response += "}";
