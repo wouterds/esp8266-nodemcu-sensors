@@ -87,7 +87,7 @@ void setupWebServer()
   Serial.println("[WebServer] Running!");
 }
 
-void setupSensors()
+void setupSensorTSL2561()
 {
   Serial.println("[TSL2561] Setup");
   Serial.print("[TSL2561] Connecting..");
@@ -100,4 +100,9 @@ void setupSensors()
   Serial.println();
 
   Serial.println("[TSL2561] Connected!");
+}
+
+void setupSensors()
+{
+  setupSensorTSL2561();
 }
