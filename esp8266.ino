@@ -13,7 +13,7 @@ const char *password = "";
 ESP8266WebServer webServer(80);
 
 // Sensors
-TSL2561 tsl2561(TSL2561_ADDR_FLOAT);
+TSL2561 tsl2561(0x39);
 Adafruit_BME280 bme280;
 TMP102 tmp102(0x48);
 
