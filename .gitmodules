@@ -4,3 +4,6 @@
 [submodule "libs/adafruit-bme280"]
 	path = libs/adafruit-bme280
 	url = https://github.com/adafruit/Adafruit_BME280_Library.git
+[submodule "libs/sparkfun-tmp102"]
+	path = libs/sparkfun-tmp102
+	url = https://github.com/sparkfun/SparkFun_TMP102_Arduino_Library.git
