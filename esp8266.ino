@@ -3,6 +3,7 @@
 #include <ESP8266WebServer.h>
 #include <TSL2561.h>
 #include <Adafruit_BME280.h>
+#include <SparkFunTMP102.h>
 
 // WiFi configuration
 const char *ssid = "";
@@ -14,6 +15,7 @@ ESP8266WebServer webServer(80);
 // Sensors
 TSL2561 tsl2561(TSL2561_ADDR_FLOAT);
 Adafruit_BME280 bme280;
+TMP102 tmp102(0x48);
 
 void setup()
 {
@@ -49,6 +51,9 @@ void handleRoot()
   // Read temperature
   float temperature = bme280.readTemperature();
 
+  // Read temperature
+  float tmp102Temperature = tmp102.readTempC();
+
   // Build response
   String response = "";
   response += "{";
@@ -63,7 +68,7 @@ void handleRoot()
   response += ",\"humidity\":";
   response += humidity;
   response += ",\"temperature\":";
-  response += temperature;
+  response += ((temperature + tmp102Temperature) / 2);
   response += "}";
 
   // Send response
@@ -103,6 +108,7 @@ void setupSensors()
 {
   setupSensorTSL2561();
   setupSensorBME280();
+  setupSensorTMP102();
 }
 
 void setupSensorTSL2561()
@@ -133,4 +139,19 @@ void setupSensorBME280()
   Serial.println();
 
   Serial.println("[BME280] Connected!");
+}
+
+void setupSensorTMP102()
+{
+  Serial.println("[TMP102] Setup");
+  Serial.print("[TMP102] Connecting..");
+
+  while (!tmp102.begin())
+  {
+    delay(200);
+    Serial.print(".");
+  }
+  Serial.println();
+
+  Serial.println("[TMP102] Connected!");
 }
