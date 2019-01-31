@@ -73,7 +73,10 @@ void handleRoot()
 }
 
 void readTemperature() {
-  return (bme280.readTemperature() + tmp102.readTempC()) / 2;
+  float bme280Temperature = bme280.readTemperature();
+  float tmp102Temperature = tmp102.readTempC();
+
+  return (tmp102Temperature + tmp102Temperature + bme280Temperature) / 3;
 }
 
 void setupWiFi()
