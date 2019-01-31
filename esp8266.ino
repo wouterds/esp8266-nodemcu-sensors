@@ -1,6 +1,7 @@
 #include <Wire.h>
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
+#include <TSL2561.h>
 
 // WiFi configuration
 const char *ssid = "";
@@ -8,6 +9,9 @@ const char *password = "";
 
 // Web server
 ESP8266WebServer webServer(80);
+
+// Sensors
+TSL2561 tsl2561(TSL2561_ADDR_FLOAT);
 
 void setup()
 {
@@ -20,6 +24,7 @@ void setup()
 
   setupWiFi();
   setupWebServer();
+  setupSensors();
 }
 
 void loop()
@@ -31,9 +36,22 @@ void handleRoot()
 {
   Serial.println("[WebServer] Request: /");
 
+  // Read illuminance
+  float visible = tsl2561.getLuminosity(TSL2561_VISIBLE);
+  float full = tsl2561.getLuminosity(TSL2561_FULLSPECTRUM);
+  float ir = tsl2561.getLuminosity(TSL2561_INFRARED);
+
   // Build response
   String response = "";
   response += "{";
+  response += "\"illuminance\":{";
+  response += "\"visible\":";
+  response += visible;
+  response += ",\"full\":";
+  response += full;
+  response += ",\"ir\":";
+  response += ir;
+  response += "}";
   response += "}";
 
   // Send response
@@ -67,4 +85,19 @@ void setupWebServer()
   Serial.println("[WebServer] Starting..");
   webServer.begin();
   Serial.println("[WebServer] Running!");
+}
+
+void setupSensors()
+{
+  Serial.println("[TSL2561] Setup");
+  Serial.print("[TSL2561] Connecting..");
+
+  while (!tsl2561.begin())
+  {
+    delay(200);
+    Serial.print(".");
+  }
+  Serial.println();
+
+  Serial.println("[TSL2561] Connected!");
 }
