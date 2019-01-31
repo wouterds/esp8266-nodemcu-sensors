@@ -150,12 +150,7 @@ void setupSensorTMP102()
   Serial.println("[TMP102] Setup");
   Serial.print("[TMP102] Connecting..");
 
-  while (!tmp102.begin())
-  {
-    delay(200);
-    Serial.print(".");
-  }
-  Serial.println();
+  tmp102.begin();
 
-  Serial.println("[TMP102] Connected!");
+  Serial.println("[TMP102] Assuming connected!");
 }
