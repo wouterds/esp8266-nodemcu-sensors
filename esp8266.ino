@@ -48,6 +48,9 @@ void handleRoot()
   // Read humidity
   float humidity = bme280.readHumidity();
 
+  // Read pressure
+  float pressure = bme280.readPressure();
+
   // Read temperature
   float temperature = readTemperature();
 
@@ -66,6 +69,8 @@ void handleRoot()
   response += humidity;
   response += ",\"temperature\":";
   response += temperature;
+  response += ",\"pressure\":";
+  response += pressure;
   response += "}";
 
   // Send response
