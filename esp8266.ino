@@ -2,6 +2,7 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
 #include <TSL2561.h>
+#include <Adafruit_BME280.h>
 
 // WiFi configuration
 const char *ssid = "";
@@ -12,6 +13,7 @@ ESP8266WebServer webServer(80);
 
 // Sensors
 TSL2561 tsl2561(TSL2561_ADDR_FLOAT);
+Adafruit_BME280 bme280;
 
 void setup()
 {
@@ -41,6 +43,12 @@ void handleRoot()
   float full = tsl2561.getLuminosity(TSL2561_FULLSPECTRUM);
   float ir = tsl2561.getLuminosity(TSL2561_INFRARED);
 
+  // Read humidity
+  float humidity = bme280.readHumidity();
+
+  // Read temperature
+  float temperature = bme280.readTemperature();
+
   // Build response
   String response = "";
   response += "{";
@@ -52,6 +60,10 @@ void handleRoot()
   response += ",\"ir\":";
   response += ir;
   response += "}";
+  response += ",\"humidity\":";
+  response += humidity;
+  response += ",\"temperature\":";
+  response += temperature;
   response += "}";
 
   // Send response
@@ -87,6 +99,12 @@ void setupWebServer()
   Serial.println("[WebServer] Running!");
 }
 
+void setupSensors()
+{
+  setupSensorTSL2561();
+  setupSensorBME280();
+}
+
 void setupSensorTSL2561()
 {
   Serial.println("[TSL2561] Setup");
@@ -102,7 +120,17 @@ void setupSensorTSL2561()
   Serial.println("[TSL2561] Connected!");
 }
 
-void setupSensors()
+void setupSensorBME280()
 {
-  setupSensorTSL2561();
+  Serial.println("[BME280] Setup");
+  Serial.print("[BME280] Connecting..");
+
+  while (!bme280.begin())
+  {
+    delay(200);
+    Serial.print(".");
+  }
+  Serial.println();
+
+  Serial.println("[BME280] Connected!");
 }
