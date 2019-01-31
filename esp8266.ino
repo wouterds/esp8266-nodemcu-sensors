@@ -49,10 +49,7 @@ void handleRoot()
   float humidity = bme280.readHumidity();
 
   // Read temperature
-  float temperature = bme280.readTemperature();
-
-  // Read temperature
-  float tmp102Temperature = tmp102.readTempC();
+  float temperature = readTemperature();
 
   // Build response
   String response = "";
@@ -68,11 +65,15 @@ void handleRoot()
   response += ",\"humidity\":";
   response += humidity;
   response += ",\"temperature\":";
-  response += ((temperature + tmp102Temperature) / 2);
+  response += temperature;
   response += "}";
 
   // Send response
   webServer.send(200, "application/json", response);
+}
+
+void readTemperature() {
+  return (bme280.readTemperature() + tmp102.readTempC()) / 2;
 }
 
 void setupWiFi()
