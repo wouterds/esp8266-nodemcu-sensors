@@ -140,7 +140,7 @@ void setupSensorBME280()
   Serial.println("[BME280] Setup");
   Serial.print("[BME280] Connecting..");
 
-  while (!bme280.begin())
+  while (!bme280.begin(0x76))
   {
     delay(200);
     Serial.print(".");
