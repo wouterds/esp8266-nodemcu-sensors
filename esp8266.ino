@@ -153,7 +153,7 @@ void setupSensorBME280()
 void setupSensorTMP102()
 {
   Serial.println("[TMP102] Setup");
-  Serial.print("[TMP102] Connecting..");
+  Serial.println("[TMP102] Connecting..");
 
   tmp102.begin();
 
