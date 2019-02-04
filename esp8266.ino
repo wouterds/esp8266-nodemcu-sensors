@@ -40,18 +40,18 @@ void handleRoot()
 {
   Serial.println("[WebServer] Request: /");
 
-  // Read illuminance
+  // Read illuminance (lx)
   float visible = tsl2561.getLuminosity(TSL2561_VISIBLE);
   float full = tsl2561.getLuminosity(TSL2561_FULLSPECTRUM);
   float ir = tsl2561.getLuminosity(TSL2561_INFRARED);
 
-  // Read temperature
+  // Read temperature (°C)
   float temperature = readTemperature();
 
-  // Read humidity
+  // Read humidity (%)
   float humidity = bme280.readHumidity();
 
-  // Read pressure
+  // Read pressure (hPa)
   float pressure = bme280.readPressure() / 100;
 
   // Build response
