@@ -52,7 +52,7 @@ void handleRoot()
   float humidity = bme280.readHumidity();
 
   // Read pressure
-  float pressure = bme280.readPressure();
+  float pressure = bme280.readPressure() / 100;
 
   // Build response
   String response = "";
