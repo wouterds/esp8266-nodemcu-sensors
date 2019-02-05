@@ -6,17 +6,21 @@
 #include <Adafruit_BME280.h>
 #include <SparkFunTMP102.h>
 
-// WiFi configuration
-const char *ssid = "";
-const char *password = "";
+// Configuration
+#define WIFI_SSID ""
+#define WIFI_PASS ""
+#define WEB_SERVER_PORT 80
+#define I2C_ADDR_TSL2561 0x39
+#define I2C_ADDR_BME280 0x76
+#define I2C_ADDR_TMP102 0x48
 
 // Web server
-ESP8266WebServer webServer(80);
+ESP8266WebServer webServer(WEB_SERVER_PORT);
 
 // Sensors
-TSL2561 tsl2561(0x39);
+TSL2561 tsl2561(I2C_ADDR_TSL2561);
 Adafruit_BME280 bme280;
-TMP102 tmp102(0x48);
+TMP102 tmp102(I2C_ADDR_TMP102);
 
 void setup()
 {
@@ -89,9 +93,9 @@ void setupWiFi()
 {
   Serial.println("[WiFi] Setup");
   Serial.print("[WiFi] Connecting to: ");
-  Serial.println(ssid);
+  Serial.println(WIFI_SSID);
 
-  WiFi.begin(ssid, password);
+  WiFi.begin(WIFI_SSID, WIFI_PASS);
   while (WiFi.status() != WL_CONNECTED)
   {
     delay(200);
@@ -141,7 +145,7 @@ void setupSensorBME280()
   Serial.println("[BME280] Setup");
   Serial.print("[BME280] Connecting..");
 
-  while (!bme280.begin(0x76))
+  while (!bme280.begin(I2C_ADDR_BME280))
   {
     delay(200);
     Serial.print(".");
