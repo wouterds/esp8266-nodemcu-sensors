@@ -1,6 +1,7 @@
 #include <Wire.h>
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
+#include <Adafruit_Sensor.h>
 #include <TSL2561.h>
 #include <Adafruit_BME280.h>
 #include <SparkFunTMP102.h>
