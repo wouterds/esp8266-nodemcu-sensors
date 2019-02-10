@@ -39,6 +39,7 @@ void setup()
 void loop()
 {
   webServer.handleClient();
+  delay(10);
 }
 
 void handleRoot()
