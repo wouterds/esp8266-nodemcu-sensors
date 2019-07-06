@@ -104,6 +104,7 @@ void setupWiFi()
   Serial.print("[WiFi] Connecting to: ");
   Serial.println(WIFI_SSID);
 
+  WiFi.mode(WIFI_STA);
   WiFi.begin(WIFI_SSID, WIFI_PASS);
   while (WiFi.status() != WL_CONNECTED)
   {
