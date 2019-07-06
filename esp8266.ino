@@ -46,9 +46,9 @@ void handleRoot()
   Serial.println("[WebServer] Request: /");
 
   // Read illuminance (lx)
-  uint32_t visible = tsl2561.getLuminosity(TSL2561_VISIBLE);
-  uint32_t full = tsl2561.getLuminosity(TSL2561_FULLSPECTRUM);
-  uint32_t ir = tsl2561.getLuminosity(TSL2561_INFRARED);
+  unsigned int visible = tsl2561.getLuminosity(TSL2561_VISIBLE);
+  unsigned int full = tsl2561.getLuminosity(TSL2561_FULLSPECTRUM);
+  unsigned int ir = tsl2561.getLuminosity(TSL2561_INFRARED);
 
   // Read temperature (°C)
   float temperature = readTemperature();
