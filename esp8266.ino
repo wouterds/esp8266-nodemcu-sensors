@@ -186,6 +186,7 @@ void setupLed()
   pinMode(RGB_LED_RED_PIN, OUTPUT);
   pinMode(RGB_LED_GREEN_PIN, OUTPUT);
   pinMode(RGB_LED_BLUE_PIN, OUTPUT);
+  setLedColor(1023, 1023, 1023);
 }
 
 void setupSensors()
