@@ -4,7 +4,7 @@
 #include <Adafruit_Sensor.h>
 #include <TSL2561.h>
 #include <Adafruit_BME280.h>
-#include <SparkFunTMP102.h>
+#include <Adafruit_HTU21DF.h>
 
 // Configuration
 #define WIFI_SSID ""
@@ -12,7 +12,6 @@
 #define WEB_SERVER_PORT 80
 #define I2C_ADDR_TSL2561 0x39
 #define I2C_ADDR_BME280 0x76
-#define I2C_ADDR_TMP102 0x48
 
 // Web server
 ESP8266WebServer webServer(WEB_SERVER_PORT);
@@ -20,7 +19,7 @@ ESP8266WebServer webServer(WEB_SERVER_PORT);
 // Sensors
 TSL2561 tsl2561(I2C_ADDR_TSL2561);
 Adafruit_BME280 bme280;
-TMP102 tmp102(I2C_ADDR_TMP102);
+Adafruit_HTU21DF htu21df;
 
 void setup()
 {
@@ -55,7 +54,7 @@ void handleRoot()
   float temperature = readTemperature();
 
   // Read humidity (%)
-  float humidity = bme280.readHumidity();
+  float humidity = readHumidity();
 
   // Read pressure (hPa)
   float pressure = bme280.readPressure() / 100;
@@ -83,11 +82,20 @@ void handleRoot()
   webServer.send(200, "application/json", response);
 }
 
-float readTemperature() {
-  float bme280Temperature = bme280.readTemperature();
-  float tmp102Temperature = tmp102.readTempC();
+float readHumidity()
+{
+  float bme280Humidity = bme280.readHumidity();
+  float htu21dfHumidity = htu21df.readHumidity();
 
-  return (tmp102Temperature + tmp102Temperature + bme280Temperature) / 3;
+  return (htu21dfHumidity + bme280Humidity) / 2;
+}
+
+float readTemperature()
+{
+  float bme280Temperature = bme280.readTemperature();
+  float htu21dfTemperature = htu21df.readTemperature();
+
+  return (htu21dfTemperature + bme280Temperature) / 2;
 }
 
 void setupWiFi()
@@ -123,7 +131,7 @@ void setupSensors()
 {
   setupSensorTSL2561();
   setupSensorBME280();
-  setupSensorTMP102();
+  setupSensorHTU21DF();
 }
 
 void setupSensorTSL2561()
@@ -156,12 +164,17 @@ void setupSensorBME280()
   Serial.println("[BME280] Connected!");
 }
 
-void setupSensorTMP102()
+void setupSensorHTU21DF()
 {
-  Serial.println("[TMP102] Setup");
-  Serial.println("[TMP102] Connecting..");
+  Serial.println("[HTU21DF] Setup");
+  Serial.print("[HTU21DF] Connecting..");
 
-  tmp102.begin();
+  while (!htu21df.begin())
+  {
+    delay(200);
+    Serial.print(".");
+  }
+  Serial.println();
 
-  Serial.println("[TMP102] Assuming connected!");
+  Serial.println("[HTU21DF] Connected!");
 }
