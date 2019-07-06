@@ -12,6 +12,9 @@
 #define WEB_SERVER_PORT 80
 #define I2C_ADDR_TSL2561 0x39
 #define I2C_ADDR_BME280 0x76
+#define RGB_LED_RED_PIN D7
+#define RGB_LED_GREEN_PIN D6
+#define RGB_LED_BLUE_PIN D5
 
 // Web server
 ESP8266WebServer webServer(WEB_SERVER_PORT);
@@ -28,6 +31,7 @@ void setup()
   setupWiFi();
   setupWebServer();
   setupSensors();
+  setupLed();
 }
 
 void loop()
@@ -114,6 +118,8 @@ void handleRoot()
   response += "}";
 
   webServer.send(200, "application/json", response);
+
+  flashLed();
 }
 
 float readHumidity()
@@ -175,6 +181,13 @@ void setupWebServer()
   Serial.println("[WebServer] Running!");
 }
 
+void setupLed()
+{
+  pinMode(RGB_LED_RED_PIN, OUTPUT);
+  pinMode(RGB_LED_GREEN_PIN, OUTPUT);
+  pinMode(RGB_LED_BLUE_PIN, OUTPUT);
+}
+
 void setupSensors()
 {
   setupSensorTSL2561();
@@ -225,4 +238,30 @@ void setupSensorHTU21DF()
   Serial.println();
 
   Serial.println("[HTU21DF] Connected!");
+}
+
+void flashLed()
+{
+  int rgbColor[3] = { 1023, 0, 0 };
+
+  // Choose the colors to increment and decrement
+  for (int decColour = 0; decColour < 3; decColour += 1) {
+    int incColour = decColour == 2 ? 0 : decColour + 1;
+
+    // Cross-fade colors
+    for(int i = 0; i < 1023; i += 1) {
+      rgbColor[decColour] -= 1;
+      rgbColor[incColour] += 1;
+
+      setLedColor(rgbColor[0], rgbColor[1], rgbColor[2]);
+      delay(1);
+    }
+  }
+}
+
+void setLedColor(unsigned int red, unsigned int green, unsigned int blue)
+{
+  analogWrite(RGB_LED_RED_PIN, 1023 - red);
+  analogWrite(RGB_LED_GREEN_PIN, 1023 - green);
+  analogWrite(RGB_LED_BLUE_PIN, 1023 - blue);
 }
