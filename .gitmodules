@@ -10,3 +10,6 @@
 [submodule "libs/adafruit-sensor"]
 	path = libs/adafruit-sensor
 	url = https://github.com/adafruit/Adafruit_Sensor.git
+[submodule "libs/adafruit-htu21df"]
+	path = libs/adafruit-htu21df
+	url = https://github.com/adafruit/Adafruit_HTU21DF_Library.git
