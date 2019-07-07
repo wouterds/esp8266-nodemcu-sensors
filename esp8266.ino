@@ -23,13 +23,8 @@ Adafruit_HTU21DF htu21df;
 
 void setup()
 {
-  // Setup I2C
-  Wire.begin(D2, D1);
-
-  // Setup Serial
-  Serial.begin(9600);
-  Serial.println();
-
+  setupI2C();
+  setupSerial();
   setupWiFi();
   setupWebServer();
   setupSensors();
@@ -92,21 +87,14 @@ void handleRoot()
 {
   Serial.println("[WebServer] Request: /");
 
-  // Read illuminance (lx)
+  // Read sensor values
   unsigned int visible = tsl2561.getLuminosity(TSL2561_VISIBLE);
   unsigned int full = tsl2561.getLuminosity(TSL2561_FULLSPECTRUM);
   unsigned int ir = tsl2561.getLuminosity(TSL2561_INFRARED);
-
-  // Read temperature (°C)
   float temperature = readTemperature();
-
-  // Read humidity (%)
   float humidity = readHumidity();
-
-  // Read pressure (hPa)
   float pressure = bme280.readPressure() / 100;
 
-  // Build response
   String response = "";
   response += "{";
   response += "\"illuminance\":{";
@@ -125,7 +113,6 @@ void handleRoot()
   response += pressure;
   response += "}";
 
-  // Send response
   webServer.send(200, "application/json", response);
 }
 
@@ -137,6 +124,17 @@ float readHumidity()
 float readTemperature()
 {
   return (bme280.readTemperature() + htu21df.readTemperature()) / 2;
+}
+
+void setupI2C()
+{
+  Wire.begin(D2, D1);
+}
+
+void setupSerial()
+{
+  Serial.begin(9600);
+  Serial.println();
 }
 
 void setupWiFi()
