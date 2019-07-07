@@ -115,7 +115,7 @@ void setupWiFi()
 void setupWebServer()
 {
   Serial.println("[WebServer] Setup");
-  webServer.on("/", handleRoot);
+  webServer.on("/", HTTP_GET, handleRoot);
 
   Serial.println("[WebServer] Starting..");
   webServer.begin();
