@@ -84,18 +84,12 @@ void handleRoot()
 
 float readHumidity()
 {
-  float bme280Humidity = bme280.readHumidity();
-  float htu21dfHumidity = htu21df.readHumidity();
-
-  return (htu21dfHumidity + bme280Humidity) / 2;
+  return (bme280.readHumidity() + htu21df.readHumidity()) / 2;
 }
 
 float readTemperature()
 {
-  float bme280Temperature = bme280.readTemperature();
-  float htu21dfTemperature = htu21df.readTemperature();
-
-  return (htu21dfTemperature + bme280Temperature) / 2;
+  return (bme280.readTemperature() + htu21df.readTemperature()) / 2;
 }
 
 void setupWiFi()
