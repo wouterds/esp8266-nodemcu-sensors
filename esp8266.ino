@@ -46,6 +46,48 @@ void handle404()
   webServer.send(404, "text/plain", "404 Not Found");
 }
 
+void handlePressure()
+{
+  float pressure = bme280.readPressure() / 100;
+
+  webServer.send(200, "text/plain", String(pressure));
+}
+
+void handleHumidity()
+{
+  float humidity = readHumidity();
+
+  webServer.send(200, "text/plain", String(humidity));
+}
+
+void handleTemperature()
+{
+  float temperature = readTemperature();
+
+  webServer.send(200, "text/plain", String(temperature));
+}
+
+void handleIlluminanceIr()
+{
+  unsigned int illuminance = tsl2561.getLuminosity(TSL2561_INFRARED);
+
+  webServer.send(200, "text/plain", String(illuminance));
+}
+
+void handleIlluminanceVisible()
+{
+  unsigned int illuminance = tsl2561.getLuminosity(TSL2561_VISIBLE);
+
+  webServer.send(200, "text/plain", String(illuminance));
+}
+
+void handleIlluminanceFull()
+{
+  unsigned int illuminance = tsl2561.getLuminosity(TSL2561_FULLSPECTRUM);
+
+  webServer.send(200, "text/plain", String(illuminance));
+}
+
 void handleRoot()
 {
   Serial.println("[WebServer] Request: /");
@@ -121,6 +163,12 @@ void setupWebServer()
 {
   Serial.println("[WebServer] Setup");
   webServer.on("/", HTTP_GET, handleRoot);
+  webServer.on("/illuminance/full", HTTP_GET, handleIlluminanceFull);
+  webServer.on("/illuminance/visible", HTTP_GET, handleIlluminanceVisible);
+  webServer.on("/illuminance/ir", HTTP_GET, handleIlluminanceIr);
+  webServer.on("/temperature", HTTP_GET, handleTemperature);
+  webServer.on("/humidity", HTTP_GET, handleHumidity);
+  webServer.on("/pressure", HTTP_GET, handlePressure);
   webServer.onNotFound(handle404);
 
   Serial.println("[WebServer] Starting..");
