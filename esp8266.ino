@@ -38,7 +38,7 @@ void setup()
 void loop()
 {
   webServer.handleClient();
-  delay(10);
+  delay(25);
 }
 
 void handleRoot()
@@ -108,7 +108,7 @@ void setupWiFi()
   WiFi.begin(WIFI_SSID, WIFI_PASS);
   while (WiFi.status() != WL_CONNECTED)
   {
-    delay(200);
+    delay(250);
     Serial.print(".");
   }
   Serial.println();
@@ -142,7 +142,7 @@ void setupSensorTSL2561()
 
   while (!tsl2561.begin())
   {
-    delay(200);
+    delay(50);
     Serial.print(".");
   }
   Serial.println();
@@ -157,7 +157,7 @@ void setupSensorBME280()
 
   while (!bme280.begin(I2C_ADDR_BME280))
   {
-    delay(200);
+    delay(50);
     Serial.print(".");
   }
   Serial.println();
@@ -172,7 +172,7 @@ void setupSensorHTU21DF()
 
   while (!htu21df.begin())
   {
-    delay(200);
+    delay(50);
     Serial.print(".");
   }
   Serial.println();
