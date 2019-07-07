@@ -141,7 +141,8 @@ void setupWiFi()
 {
   Serial.println("[WiFi] Setup");
   Serial.print("[WiFi] Connecting to: ");
-  Serial.println(WIFI_SSID);
+  Serial.print(WIFI_SSID);
+  Serial.print("..");
 
   WiFi.mode(WIFI_STA);
   WiFi.begin(WIFI_SSID, WIFI_PASS);
