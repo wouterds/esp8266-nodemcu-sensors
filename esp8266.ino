@@ -41,6 +41,11 @@ void loop()
   delay(25);
 }
 
+void handle404()
+{
+  webServer.send(404, "text/plain", "404 Not Found");
+}
+
 void handleRoot()
 {
   Serial.println("[WebServer] Request: /");
@@ -116,6 +121,7 @@ void setupWebServer()
 {
   Serial.println("[WebServer] Setup");
   webServer.on("/", HTTP_GET, handleRoot);
+  webServer.onNotFound(handle404);
 
   Serial.println("[WebServer] Starting..");
   webServer.begin();
