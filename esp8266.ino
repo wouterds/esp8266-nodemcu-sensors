@@ -37,6 +37,7 @@ void setup()
 void loop()
 {
   webServer.handleClient();
+  checkLed();
   delay(25);
 }
 
@@ -85,6 +86,16 @@ void handleIlluminanceFull()
   unsigned int illuminance = tsl2561.getLuminosity(TSL2561_FULLSPECTRUM);
 
   webServer.send(200, "text/plain", String(illuminance));
+}
+
+bool isLedEnabled = true;
+void handleLed()
+{
+  if (webServer.hasArg("enabled")) {
+    isLedEnabled = webServer.arg("enabled").equals("1");
+  }
+
+  webServer.send(204);
 }
 
 void handleRoot()
@@ -174,6 +185,7 @@ void setupWebServer()
   webServer.on("/temperature", HTTP_GET, handleTemperature);
   webServer.on("/humidity", HTTP_GET, handleHumidity);
   webServer.on("/pressure", HTTP_GET, handlePressure);
+  webServer.on("/led", HTTP_POST, handleLed);
   webServer.onNotFound(handle404);
 
   Serial.println("[WebServer] Starting..");
@@ -241,8 +253,24 @@ void setupSensorHTU21DF()
   Serial.println("[HTU21DF] Connected!");
 }
 
+void checkLed()
+{
+  // Enabled, do nothing
+  if (isLedEnabled) {
+    return;
+  }
+
+  // Turn led off
+  setLedColor(0, 0, 0);
+}
+
 void flashLed()
 {
+  // Led disabled, stop here
+  if (!isLedEnabled) {
+    return;
+  }
+
   int rgbColor[3] = { 1023, 0, 0 };
 
   // Choose the colors to increment and decrement
