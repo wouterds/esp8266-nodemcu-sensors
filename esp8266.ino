@@ -283,7 +283,7 @@ void flashLed()
       rgbColor[incColour] += 1;
 
       setLedColor(rgbColor[0], rgbColor[1], rgbColor[2]);
-      delay(1);
+      delayMicroseconds(250); // 0.25ms
     }
   }
 }
