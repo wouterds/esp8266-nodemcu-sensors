@@ -6,13 +6,18 @@ Basic example how to output sensor readings as a JSON API using an ESP8266 NodeM
 
 Everything on the picture below was bought on ebay for about $10 in total.
 
-![Hardware Setup](https://wouterdeschuyter.be/static/media/7d4b6e21-5a94-4166-9fff-55c653fbb57e.jpeg)
+![Hardware Setup](https://i.imgur.com/mS9Tymc.gif)
 
 ### Sensors
 
 - BME280 (temperature, pressure, humidity)
-- TMP102 (temperature; but more accurate than the BME280)
+- HTU21DF (temperature & humidity; but more accurate than the BME280)
 - TSL2561 (illuminance; full spectrum, ir spectrum & visible spectrum)
+
+### RGB led
+
+The led rotates through all colors on each request, just found it a funny effect.<br />
+But it can be enabled / disabled using a `POST` call to the `/led` endpoint.
 
 ## Output
 
