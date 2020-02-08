@@ -6,7 +6,7 @@ Basic example how to output sensor readings as a JSON API using an ESP8266 NodeM
 
 Everything on the picture below was bought on ebay for about $10 in total.
 
-![Hardware Setup](https://wouterdeschuyter.be/static/media/7d4b6e21-5a94-4166-9fff-55c653fbb57e.jpeg)
+![Hardware Setup](https://wouterdeschuyter.be/static/media/7d4b6e21-5a94-4166-9fff-55c653fbb57e.jpg)
 
 ### Sensors
 
